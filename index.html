@@ -7,7 +7,7 @@
   
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <!-- MindAR image tracking -->
+  <!-- MindAR image tracking with embedded Three.js -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
   <style>
@@ -26,21 +26,18 @@
 <body>
 
 <a-scene
-  mindar-image="imageTargetSrc: ./qrkod.mind; autoStart: true"
+  mindar-image="imageTargetSrc: https://raw.githubusercontent.com/ekoc1/SON/main/qrcode.mind; autoStart: true"
   embedded
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: true"
   renderer="colorManagement: true, physicallyCorrectLights"
 >
   <a-assets>
-    <!-- 3D Model GLB dosyan -->
-    <a-asset-item id="model" src="./model.glb"></a-asset-item>
+    <a-asset-item id="model" src="https://raw.githubusercontent.com/ekoc1/SON/main/model.glb"></a-asset-item>
   </a-assets>
 
-  <!-- Kamera pozisyonunu sıfırda, kontroller kapalı -->
   <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-  <!-- Marker hedefi, model burada tanımlı, scale = 1 = gerçek ölçü, rotate 180 Y ekseninde -->
   <a-entity mindar-image-target="targetIndex: 0" rotation="0 180 0" scale="1 1 1">
     <a-gltf-model src="#model" position="0 0 0"></a-gltf-model>
   </a-entity>
