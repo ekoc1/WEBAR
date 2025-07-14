@@ -1,49 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>MindAR Marker AR - QR Kod Target</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>MindAR Marker AR</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
 
-  <!-- Three.js -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.138.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.138.0/examples/js/loaders/GLTFLoader.js"></script>
+    <!-- Three.js ve gerekli modüller -->
+    <script type="module">
+      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.138.0/build/three.module.js';
+      import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.138.0/examples/jsm/loaders/GLTFLoader.js';
+      import { MindARThree } from 'https://cdn.jsdelivr.net/npm/mind-ar@1.2.0/dist/mindar-image-three.prod.js';
 
-  <!-- MindAR 1.1.5 (modül hatası vermez) -->
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image.prod.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-three.prod.js"></script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const mindarThree = new MindARThree({
+          container: document.body,
+          imageTargetSrc: './qrkod.mind', // Marker dosyan
+        });
 
-  <style>
-    body { margin: 0; overflow: hidden; }
-    canvas, video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-  </style>
-</head>
-<body>
-  <script>
-    window.onload = async () => {
-      const mindarThree = new window.MINDAR.IMAGE.MindARThree({
-        container: document.body,
-        imageTargetSrc: './qrkod.mind',
-        maxTrack: 1
-      });
+        const { renderer, scene, camera } = mindarThree;
+        const anchor = mindarThree.addAnchor(0); // Marker index 0
 
-      const { renderer, scene, camera } = mindarThree;
-
-      const anchor = mindarThree.addAnchor(0);
-
-      const loader = new THREE.GLTFLoader();
-      loader.load('./model.glb', (gltf) => {
+        // GLB modelini yükle
+        const loader = new GLTFLoader();
+        const gltf = await loader.loadAsync('./model.glb');
         const model = gltf.scene;
-        model.scale.set(1, 1, 1);
+
+        // Model ayarları
+        model.scale.set(0.5, 0.5, 0.5);
         model.position.set(0, 0, 0);
-        anchor.group.add(model);
-      });
+        anchor.group.add(model); // Modeli marker'a yerleştir
 
-      await mindarThree.start();
-
-      renderer.setAnimationLoop(() => {
-        renderer.render(scene, camera);
+        // Başlat
+        await mindarThree.start();
+        renderer.setAnimationLoop(() => {
+          renderer.render(scene, camera);
+        });
       });
-    };
-  </script>
-</body>
+    </script>
+  </head>
+  <body></body>
 </html>
