@@ -2,50 +2,29 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MindAR QR Marker 3D Model</title>
   <script src="https://cdn.jsdelivr.net/npm/aframe@1.5.0/dist/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-aframe.prod.js"></script>
 </head>
-<body>
-  <a-scene mindar-image="imageTargetSrc: ./qrkod.mind; autoStart: true" 
+<body style="margin: 0; overflow: hidden;">
+  <a-scene mindar-image="imageTargetSrc: ./qrkod.mind; autoStart: true;" 
            embedded 
            vr-mode-ui="enabled: false" 
            device-orientation-permission-ui="enabled: true" 
-           renderer="colorManagement: true, physicallyCorrectLights: true" 
-           inspector 
-           keyboard-shortcuts 
-           screenshot 
-           xr-mode-ui>
-    
+           renderer="colorManagement: true, physicallyCorrectLights: true">
+
     <a-assets>
-      <!-- 3D Model GLB dosyan -->
       <a-asset-item id="model" src="./model.glb"></a-asset-item>
     </a-assets>
 
-    <!-- Kamera pozisyonu sıfırda, kontroller kapalı -->
-    <a-camera position="0 0 0" look-controls="enabled: false" camera rotation wasd-controls></a-camera>
+    <a-camera position="0 0 0" look-controls="enabled: false" wasd-controls="enabled: false"></a-camera>
 
-    <!-- Marker hedefi, model burada tanımlı, scale = 1 = gerçek ölçü, rotate 180 Y ekseninde -->
     <a-entity mindar-image-target="targetIndex: 0" rotation="0 180 0" scale="1 1 1">
       <a-gltf-model src="#model" position="0 0 0"></a-gltf-model>
     </a-entity>
 
-    <a-entity light data-aframe-default-light></a-entity>
-    <a-entity light position data-aframe-default-light></a-entity>
-
+    <a-entity light="type: directional; color: #fff; intensity: 1" position="0 1 1"></a-entity>
+    <a-entity light="type: ambient; color: #888"></a-entity>
   </a-scene>
-
-  <div class="mindar-ui-overlay mindar-ui-loading hidden">
-    <div class="loader"></div>
-  </div>
-
-  <div class="mindar-ui-overlay mindar-ui-compatibility hidden">
-    <div class="content"></div>
-  </div>
-
-  <div class="mindar-ui-overlay mindar-ui-scanning">
-    <div class="scanning"></div>
-  </div>
 </body>
 </html>
