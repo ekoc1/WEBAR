@@ -1,8 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindAR WebAR Demo</title>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-three.prod.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+</head>
+<body>
 <script>
   document.addEventListener("DOMContentLoaded", async () => {
     const mindarThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
       imageTargetSrc: "./qrkod.mind",
+      maxTrack: 1
     });
 
     const {renderer, scene, camera} = mindarThree;
@@ -18,23 +46,21 @@
           model.scale.set(0.5, 0.5, 0.5);
           model.position.set(0, 0, 0);
           anchor.group.add(model);
+        }, undefined, (error) => {
+          console.error("Model yükleme hatası:", error);
         });
       }
     };
 
     anchor.onTargetLost = () => {
-      // model kaybolmasın
+      // model kalıcı olsun
     };
 
     await mindarThree.start();
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    window.addEventListener('resize', () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
     renderer.setAnimationLoop(() => {
       renderer.render(scene, camera);
     });
   });
 </script>
+</body>
+</html>
