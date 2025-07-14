@@ -4,20 +4,28 @@
     <meta charset="UTF-8" />
     <title>MindAR Marker AR</title>
     <style>
-      body {
+      html, body {
         margin: 0;
+        padding: 0;
         overflow: hidden;
+        width: 100%;
+        height: 100%;
       }
-      canvas {
+      #ar-container {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+      canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
       }
     </style>
 
-    <!-- Three.js ve gerekli modüller -->
     <script type="module">
       import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.138.0/build/three.module.js';
       import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.138.0/examples/jsm/loaders/GLTFLoader.js';
@@ -25,30 +33,33 @@
 
       document.addEventListener("DOMContentLoaded", async () => {
         const mindarThree = new MindARThree({
-          container: document.body,
-          imageTargetSrc: './qrkod.mind', // Marker dosyan
+          container: document.querySelector("#ar-container"),
+          imageTargetSrc: "./qrkod.mind",
+          maxTrack: 1
         });
 
         const { renderer, scene, camera } = mindarThree;
-        const anchor = mindarThree.addAnchor(0); // Marker index 0
 
-        // GLB modelini yükle
+        const anchor = mindarThree.addAnchor(0);
+
         const loader = new GLTFLoader();
-        const gltf = await loader.loadAsync('./model.glb');
+        const gltf = await loader.loadAsync("./model.glb");
         const model = gltf.scene;
 
-        // Model ayarları
         model.scale.set(0.5, 0.5, 0.5);
         model.position.set(0, 0, 0);
-        anchor.group.add(model); // Modeli marker'a yerleştir
 
-        // Başlat
+        anchor.group.add(model);
+
         await mindarThree.start();
+
         renderer.setAnimationLoop(() => {
           renderer.render(scene, camera);
         });
       });
     </script>
   </head>
-  <body></body>
+  <body>
+    <div id="ar-container"></div>
+  </body>
 </html>
