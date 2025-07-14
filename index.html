@@ -17,13 +17,12 @@
     const start = async () => {
       const mindarThree = new MindARThree({
         container: document.body,
-        imageTargetSrc: './qrkod.mind',  // Buraya qrkod.mind dosyanı koy
+        imageTargetSrc: './qrkod.mind',
       });
       const { renderer, scene, camera } = mindarThree;
 
-      // Modeli yükle
       const loader = new GLTFLoader();
-      const model = await loader.loadAsync('./model.glb');  // Model dosyan burada
+      const model = await loader.loadAsync('./model.glb');
       model.scene.scale.set(0.5, 0.5, 0.5);
       model.scene.position.set(0, 0, 0);
       scene.add(model.scene);
@@ -37,4 +36,4 @@
     start();
   </script>
 </body>
-</html>
+</html
