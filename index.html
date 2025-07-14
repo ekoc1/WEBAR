@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <title>MindAR QR Marker 3D Model</title>
@@ -26,7 +26,7 @@
 <body>
 
 <a-scene
-  mindar-image="imageTargetSrc: https://raw.githubusercontent.com/ekoc1/SON/main/qrcode.mind; autoStart: true"
+  mindar-image="imageTargetSrc: ./qrkod.mind; autoStart: true"
   embedded
   vr-mode-ui="enabled: false"
   device-orientation-permission-ui="enabled: true"
@@ -34,7 +34,7 @@
 >
   <a-assets>
     <!-- 3D Model GLB dosyan -->
-    <a-asset-item id="model" src="https://raw.githubusercontent.com/ekoc1/SON/main/model.glb"></a-asset-item>
+    <a-asset-item id="model" src="./model.glb"></a-asset-item>
   </a-assets>
 
   <!-- Kamera pozisyonunu sıfırda, kontroller kapalı -->
