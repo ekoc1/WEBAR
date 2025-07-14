@@ -4,9 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>WebAR Tam Ekran Test</title>
-<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
+
+<!-- Three.js 0.158.0 -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+<!-- GLTFLoader (modül değil, global) -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+
+<!-- MindAR -->
 <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-three.prod.js"></script>
+
 <style>
   html, body {
     margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
@@ -38,11 +45,12 @@
 
     anchor.onTargetFound = () => {
       if (!model) {
-        const loader = new THREE.GLTFLoader();
+        // Burada THREE.GLTFLoader değil, GLTFLoader direkt kullanılır
+        const loader = new GLTFLoader();
         loader.load("./model.glb", (gltf) => {
           model = gltf.scene;
           model.scale.set(1, 1, 1);
-          model.position.set(1, 1, 1);
+          model.position.set(0, 0, 0); // Daha uygun pozisyon
           anchor.group.add(model);
         });
       }
@@ -66,4 +74,3 @@
 </script>
 </body>
 </html>
-
