@@ -2,23 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>MindAR Marker QR Kod</title>
+  <title>MindAR Marker AR - QR Kod Target</title>
   <script src="https://cdn.jsdelivr.net/npm/three@0.138.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.138.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-three.prod.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.138.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
-<body style="margin:0; overflow:hidden;">
-  <video id="video" autoplay muted playsinline style="position:fixed; top:0; left:0; width:100%; height:100%;"></video>
+<body style="margin: 0; overflow: hidden;">
+  <video id="video" autoplay muted playsinline style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;"></video>
 
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const mindarThree = new window.MindAR.IMAGE.MindARThree({
         container: document.body,
-        imageTargetSrc: './qrkod.mind',
+        imageTargetSrc: './qrkod.mind' // Buradaki dosya yolunu doğru konuma göre ayarlamalısın
       });
 
-      const {renderer, scene, camera} = mindarThree;
+      const { renderer, scene, camera } = mindarThree;
 
       const loader = new THREE.GLTFLoader();
       loader.load('./model.glb', (gltf) => {
